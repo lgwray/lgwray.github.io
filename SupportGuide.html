@@ -19,6 +19,36 @@
             margin: 0 auto;
             color: #333;
         }
+        /* 导航样式 */
+        .lang-nav {
+            display: flex;
+            list-style: none;
+            margin: 0 0 30px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            overflow-x: auto; /* 适配小屏幕横向滚动 */
+        }
+        .lang-nav li {
+            margin: 0 5px;
+            white-space: nowrap; /* 防止文字换行 */
+        }
+        .lang-nav button {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .lang-nav button.active {
+            background: #e8491d;
+            color: white;
+        }
+        .lang-nav button:hover:not(.active) {
+            background: #e0e0e0;
+        }
         /* 标题样式 */
         .title {
             text-align: center;
@@ -27,21 +57,20 @@
             margin: 20px 0;
             font-weight: bold;
         }
-        /* 语言分隔线 */
-        .lang-divider {
-            margin: 30px 0;
-            text-align: center;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* 语言内容容器 */
+        .lang-content {
+            display: none; /* 默认隐藏所有语言内容 */
         }
-        .lang-divider::before,
-        .lang-divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: #ccc;
+        .lang-content.active {
+            display: block; /* 仅显示激活的语言内容 */
+        }
+        /* 语言分隔线（改为标题样式） */
+        .lang-title {
+            margin: 20px 0;
+            font-size: 1.3rem;
+            color: #35424a;
+            border-bottom: 2px solid #e8491d;
+            padding-bottom: 8px;
         }
         /* 内容段落 */
         p {
@@ -61,14 +90,16 @@
         .responsive-img {
             max-width: 100%;
             height: auto;
-            max-height: 400px; /* 限制最大高度，避免过大 */
+            max-height: 400px; /* 限制最大高度 */
             border: 1px solid #eee;
+            border-radius: 4px;
         }
         /* 步骤标题 */
         .step-title {
             font-weight: bold;
             margin-top: 20px;
             font-size: 1.1rem;
+            color: #35424a;
         }
         /* 响应式调整 */
         @media (max-width: 768px) {
@@ -81,13 +112,17 @@
             p {
                 font-size: 0.95rem;
             }
+            .lang-nav button {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
         }
         @media (max-width: 480px) {
             .title {
                 font-size: 1.3rem;
             }
-            .lang-divider {
-                font-size: 0.9rem;
+            .lang-title {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -96,84 +131,121 @@
     <!-- 标题 -->
     <div class="title">汉字大师支持说明</div>
 
-    <!-- 简体中文部分 -->
-    <div class="lang-divider">【简体中文】</div>
-    <p>感谢您使用【汉字大师】APP，您可以通过以下途径获取支持：</p>
-    
-    <p class="step-title">1. 微信群沟通</p>
-    <p>在APP设置页面，找到"加入微信群"，点击跳转到新页面，<span class="highlight">扫描群二维码后加入。</span></p>
-    <div class="img-container">
-        <img src="SupportGuide.files/SupportGuide253.png" alt="微信群二维码" class="responsive-img">
-    </div>
-    
-    <p class="step-title">2. APP内直接反馈意见</p>
-    <p>在APP的主页面（即进入APP后的第一个页面，显示当前学习课文的单元、课程等信息），<span class="highlight">在下方工具栏，点击中间的按钮，跳转到意见反馈页面，直接输入意见。</span></p>
-    <p>我们会对意见，做出响应。</p>
-    <div class="img-container">
-        <img src="SupportGuide.files/SupportGuide457.png" alt="APP反馈页面" class="responsive-img">
-    </div>
-    
-    <p class="step-title">3. 邮件沟通</p>
-    <p>发送意见到邮箱：<span class="highlight">3182721176@qq.com</span></p>
+    <!-- 语言导航 -->
+    <ul class="lang-nav">
+        <li><button class="lang-btn active" data-lang="zh-CN">简体中文</button></li>
+        <li><button class="lang-btn" data-lang="zh-TW">繁体中文</button></li>
+        <li><button class="lang-btn" data-lang="en">English</button></li>
+        <li><button class="lang-btn" data-lang="ja">日本語</button></li>
+    </ul>
 
-    <!-- 繁体中文部分 -->
-    <div class="lang-divider">【繁體中文】</div>
-    <p>感謝您使用【漢字大師】APP，您可以通過以下途徑獲取支援：</p>
-    
-    <p class="step-title">1. 微信群溝通</p>
-    <p>在APP設定頁面，找到「加入微信群」，點擊後跳轉至新頁面，<span class="highlight">掃描群組二維碼即可加入。</span></p>
-    <div class="img-container">
-        <img src="SupportGuide.files/SupportGuide748.png" alt="微信群二維碼" class="responsive-img">
+    <!-- 简体中文内容 -->
+    <div class="lang-content active" id="zh-CN">
+        <h3 class="lang-title">【简体中文】</h3>
+        <p>感谢您使用【汉字大师】APP，您可以通过以下途径获取支持：</p>
+        
+        <p class="step-title">1. 微信群沟通</p>
+        <p>在APP设置页面，找到"加入微信群"，点击跳转到新页面，<span class="highlight">扫描群二维码后加入。</span></p>
+        <div class="img-container">
+            <img src="SupportGuide.files/SupportGuide253.png" alt="微信群二维码" class="responsive-img">
+        </div>
+        
+        <p class="step-title">2. APP内直接反馈意见</p>
+        <p>在APP的主页面（即进入APP后的第一个页面，显示当前学习课文的单元、课程等信息），<span class="highlight">在下方工具栏，点击中间的按钮，跳转到意见反馈页面，直接输入意见。</span></p>
+        <p>我们会对意见，做出响应。</p>
+        <div class="img-container">
+            <img src="SupportGuide.files/SupportGuide457.png" alt="APP反馈页面" class="responsive-img">
+        </div>
+        
+        <p class="step-title">3. 邮件沟通</p>
+        <p>发送意见到邮箱：<span class="highlight">3182721176@qq.com</span></p>
     </div>
-    
-    <p class="step-title">2. APP内直接反饋意見</p>
-    <p>在APP主頁面（即進入APP後的首頁，顯示當前學習課文的單元、課程等資訊），<span class="highlight">點擊下方工具欄中間的按鈕，跳轉至意見回饋頁面，直接輸入意見。</span></p>
-    <p>我們會對意見做出回應。</p>
-    <div class="img-container">
-        <img src="SupportGuide.files/SupportGuide945.png" alt="APP反饋頁面" class="responsive-img">
-    </div>
-    
-    <p class="step-title">3. 郵件溝通</p>
-    <p>傳送意見至信箱：<span class="highlight">3182721176@qq.com</span></p>
 
-    <!-- 英文部分 -->
-    <div class="lang-divider">【English】</div>
-    <p>Thank you for using the 【EZ Chinese】 APP. You can obtain support through the following channels:</p>
-    
-    <p class="step-title">1. WeChat Group Communication</p>
-    <p>On the APP settings page, find "Join WeChat Group," then click to navigate to a new page and <span class="highlight">(Use WeChat app) scan the group QR code to join.</span></p>
-    <div class="img-container">
-        <img src="SupportGuide.files/SupportGuide1427.png" alt="WeChat Group QR Code" class="responsive-img">
+    <!-- 繁体中文内容 -->
+    <div class="lang-content" id="zh-TW">
+        <h3 class="lang-title">【繁體中文】</h3>
+        <p>感謝您使用【漢字大師】APP，您可以通過以下途徑獲取支援：</p>
+        
+        <p class="step-title">1. 微信群溝通</p>
+        <p>在APP設定頁面，找到「加入微信群」，點擊後跳轉至新頁面，<span class="highlight">掃描群組二維碼即可加入。</span></p>
+        <div class="img-container">
+            <img src="SupportGuide.files/SupportGuide748.png" alt="微信群二維碼" class="responsive-img">
+        </div>
+        
+        <p class="step-title">2. APP内直接反饋意見</p>
+        <p>在APP主頁面（即進入APP後的首頁，顯示當前學習課文的單元、課程等資訊），<span class="highlight">點擊下方工具欄中間的按鈕，跳轉至意見回饋頁面，直接輸入意見。</span></p>
+        <p>我們會對意見做出回應。</p>
+        <div class="img-container">
+            <img src="SupportGuide.files/SupportGuide945.png" alt="APP反饋頁面" class="responsive-img">
+        </div>
+        
+        <p class="step-title">3. 郵件溝通</p>
+        <p>傳送意見至信箱：<span class="highlight">3182721176@qq.com</span></p>
     </div>
-    
-    <p class="step-title">2. Direct Feedback in the APP</p>
-    <p>On the APP homepage (the first page displayed upon entering the APP, showing the current learning unit, course info, etc.), <span class="highlight">click the middle button in the bottom toolbar to jump to the feedback page. Enter your suggestions directly</span>—we will respond to all feedback.</p>
-    <div class="img-container">
-        <img src="SupportGuide.files/SupportGuide1823.png" alt="APP Feedback Page" class="responsive-img">
-    </div>
-    
-    <p class="step-title">3. Email Communication</p>
-    <p>Send feedback to: <a href="mailto:3182721176@qq.com" class="highlight">3182721176@qq.com</a></p>
 
-    <!-- 日本語部分 -->
-    <div class="lang-divider">【日本語】</div>
-    <p>【漢字大師】アプリをご利用いただきありがとうございます。サポートは以下の方法で受けられます：</p>
-    
-    <p class="step-title">1. 微信群でのコミュニケーション</p>
-    <p>アプリの設定ページで「微信群に参加」を探し、タップして新しいページに移動し、<span class="highlight">グループQRコードをスキャンして参加します。</span></p>
-    <div class="img-container">
-        <img src="SupportGuide.files/SupportGuide2224.png" alt="微信群QRコード" class="responsive-img">
+    <!-- 英文内容 -->
+    <div class="lang-content" id="en">
+        <h3 class="lang-title">【English】</h3>
+        <p>Thank you for using the 【EZ Chinese】 APP. You can obtain support through the following channels:</p>
+        
+        <p class="step-title">1. WeChat Group Communication</p>
+        <p>On the APP settings page, find "Join WeChat Group," then click to navigate to a new page and <span class="highlight">(Use WeChat app) scan the group QR code to join.</span></p>
+        <div class="img-container">
+            <img src="SupportGuide.files/SupportGuide1427.png" alt="WeChat Group QR Code" class="responsive-img">
+        </div>
+        
+        <p class="step-title">2. Direct Feedback in the APP</p>
+        <p>On the APP homepage (the first page displayed upon entering the APP, showing the current learning unit, course info, etc.), <span class="highlight">click the middle button in the bottom toolbar to jump to the feedback page. Enter your suggestions directly</span>—we will respond to all feedback.</p>
+        <div class="img-container">
+            <img src="SupportGuide.files/SupportGuide1823.png" alt="APP Feedback Page" class="responsive-img">
+        </div>
+        
+        <p class="step-title">3. Email Communication</p>
+        <p>Send feedback to: <a href="mailto:3182721176@qq.com" class="highlight">3182721176@qq.com</a></p>
     </div>
-    
-    <p class="step-title">2. アプリ内での直接フィードバック</p>
-    <p>アプリのホーム画面（アプリ起動後の最初のページで、現在学習中の単元やコース情報が表示される画面）で、<span class="highlight">下部ツールバーの中央ボタンをタップし、フィードバックページに移動して直接意見を入力します。</span></p>
-    <p>ご意見には対応いたします。</p>
-    <div class="img-container">
-        <img src="SupportGuide.files/SupportGuide2456.png" alt="アプリフィードバックページ" class="responsive-img">
+
+    <!-- 日本語内容 -->
+    <div class="lang-content" id="ja">
+        <h3 class="lang-title">【日本語】</h3>
+        <p>【漢字大師】アプリをご利用いただきありがとうございます。サポートは以下の方法で受けられます：</p>
+        
+        <p class="step-title">1. 微信群でのコミュニケーション</p>
+        <p>アプリの設定ページで「微信群に参加」を探し、タップして新しいページに移動し、<span class="highlight">グループQRコードをスキャンして参加します。</span></p>
+        <div class="img-container">
+            <img src="SupportGuide.files/SupportGuide2224.png" alt="微信群QRコード" class="responsive-img">
+        </div>
+        
+        <p class="step-title">2. アプリ内での直接フィードバック</p>
+        <p>アプリのホーム画面（アプリ起動後の最初のページで、現在学習中の単元やコース情報が表示される画面）で、<span class="highlight">下部ツールバーの中央ボタンをタップし、フィードバックページに移動して直接意見を入力します。</span></p>
+        <p>ご意見には対応いたします。</p>
+        <div class="img-container">
+            <img src="SupportGuide.files/SupportGuide2456.png" alt="アプリフィードバックページ" class="responsive-img">
+        </div>
+        
+        <p class="step-title">3. メールでの連絡</p>
+        <p>意見をメールで送信：<span class="highlight">3182721176@qq.com</span></p>
     </div>
-    
-    <p class="step-title">3. メールでの連絡</p>
-    <p>意見をメールで送信：<span class="highlight">3182721176@qq.com</span></p>
+
+    <script>
+        // 语言切换逻辑
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const langContents = document.querySelectorAll('.lang-content');
+        
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 移除所有激活状态
+                langBtns.forEach(b => b.classList.remove('active'));
+                langContents.forEach(c => c.classList.remove('active'));
+                
+                // 激活当前语言
+                const lang = btn.getAttribute('data-lang');
+                btn.classList.add('active');
+                document.getElementById(lang).classList.add('active');
+                
+                // 滚动到顶部（优化体验）
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
 </body>
 </html>
-
