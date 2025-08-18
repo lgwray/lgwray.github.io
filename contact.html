@@ -5,16 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>联系我 - 我的 GitHub Pages 网站</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 微信二维码样式 - 类名语义化调整 */
+        .wechat-container {
+            margin: 1rem 0; /* 增加上下间距，与其他联系方式区分 */
+        }
+
+        .wechat-qrcode {
+            width: 120px; /* 固定宽度 */
+            height: 120px; /* 固定高度 */
+            margin-top: 8px; /* 与上方文字保持距离 */
+            border: 1px solid #eee; /* 增加边框，让二维码更清晰 */
+            border-radius: 4px;
+            transition: transform 0.3s; /* 悬停时轻微放大效果 */
+        }
+
+        .wechat-qrcode:hover {
+            transform: scale(1.05); /* 悬停放大效果 */
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>欢迎来到我的网站</h1>
         <nav>
             <ul>
-                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="index.html">首页</a></li>
                 <li><a href="about.html">关于作者</a></li>
                 <li><a href="projects.html">汉字大师APP</a></li>
-                <li><a href="contact.html">联系我</a></li>
+                <li><a href="contact.html" class="active">联系我</a></li> <!-- 当前页面导航高亮 -->
             </ul>
         </nav>
     </header>
@@ -27,34 +46,20 @@
             <div class="contact-info">
                 <p><strong>邮箱：</strong> 3182721176@qq.com</p>
                 <p><strong>微信：</strong> 174865717</p>
-                 <div class="twitter-container">
-    <strong>微信二维码</strong>
-        <img src="wechatQRCode.png" alt="微信二维码" class="twitter-icon">
-</div>
+                
+                <!-- 微信二维码部分 - 类名语义化调整 -->
+                <div class="wechat-container">
+                    <strong>微信二维码：</strong><br> <!-- 增加冒号和换行，布局更清晰 -->
+                    <!-- 建议将图片放在images文件夹，路径更规范 -->
+                    <img src="wechatQRCode.png" alt="微信二维码，扫码可添加好友" class="wechat-qrcode">
+                </div>
             </div>
         </section>
     </main>
-
-<style>
-.twitter-container {
-    display: inline-block;
-    text-align: center;
-}
-
-.twitter-icon {
-    width: 120px; /* 固定宽度 */
-    height: 120px; /* 固定高度 */
-    margin-top: 8px; /* 与上方文字保持距离 */
-    border-radius: 4px; /* 可选：添加圆角 */
-    transition: opacity 0.3s; /* 可选：添加悬停效果 */
-}
-
-</style>
-
-    
     
     <footer>
         <p>&copy; 2025 汉字大师 | 支持微信号：174865717 </p>
     </footer>
 </body>
 </html>
+    
